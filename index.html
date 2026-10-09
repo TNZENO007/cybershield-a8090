@@ -1,0 +1,458 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#04040a"><title>CyberShield AI Pro</title><link rel="manifest" href="manifest.json?v=2"><link rel="shortcut icon" href="favicon.ico?v=2"><link rel="icon" type="image/png" sizes="32x32" href="favicon-v2-32.png"><link rel="icon" type="image/png" sizes="192x192" href="icon-v2-192.png"><link rel="apple-touch-icon" href="apple-touch-icon-v2.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<style>
+:root{--bg:#090c0f;--tx:#eef2f5;--mu:#8e9ba6;--gl:rgba(255,255,255,.06);--bd:rgba(255,255,255,.11);--ac:#5eead4;--bad:#fb923c;--ok:#4ade80;--wn:#facc15;--in:rgba(255,255,255,.07);--sh:rgba(0,0,0,.55);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{--bg:#dde4e8;--tx:#10181d;--mu:#55636d;--gl:rgba(255,255,255,.55);--bd:rgba(255,255,255,.9);--ac:#0f766e;--bad:#ea580c;--ok:#15803d;--wn:#a16207;--in:rgba(255,255,255,.6);--sh:rgba(40,60,80,.2)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{font-family:system-ui,-apple-system,"SF Pro Display",Segoe UI,Roboto,sans-serif;color:var(--tx);background:var(--bg);overflow:hidden}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(120% 90% at 20% 0%,#16201f,#090c0f 60%)}
+.bg i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.4;animation:fl 26s ease-in-out infinite alternate}
+.bg i:nth-child(1){width:50vmax;height:50vmax;left:-10vmax;top:-15vmax;background:#0f766e}
+.bg i:nth-child(2){width:45vmax;height:45vmax;right:-12vmax;top:8vmax;background:#475569;animation-direction:alternate-reverse}
+.bg i:nth-child(3){width:50vmax;height:50vmax;left:18vmax;bottom:-28vmax;background:#166534;animation-duration:31s}
+.bg i:nth-child(4){width:30vmax;height:30vmax;right:8vmax;bottom:-6vmax;background:#1e293b}
+:root[data-theme="light"] .bg{background:linear-gradient(160deg,#cfe0dd,#e8eef1)}:root[data-theme="light"] .bg i{opacity:.5}
+@keyframes fl{to{transform:translate(8vmax,5vmax) scale(1.15)}}
+.g{position:relative;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.03));backdrop-filter:blur(26px) saturate(1.3);-webkit-backdrop-filter:blur(26px) saturate(1.3);border:1px solid var(--bd);border-radius:22px;box-shadow:0 20px 50px var(--sh),inset 0 1px 0 rgba(255,255,255,.14)}
+button,input,textarea,select{font:inherit;color:inherit}
+input,textarea{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--bd);background:var(--in);outline:none}
+input:focus,textarea:focus{border-color:var(--ac)}
+.btn{background:linear-gradient(135deg,#3b82f6,#22d3ee);color:#fff;border:0;padding:11px 18px;border-radius:12px;cursor:pointer;font-weight:600}
+.btn.s{background:var(--in);color:var(--tx);border:1px solid var(--bd)}.btn:active{transform:scale(.97)}
+a{color:var(--ac);cursor:pointer}
+#auth{height:100%;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.box{width:100%;max-width:400px;padding:28px}
+.logo{font-size:26px;font-weight:800;text-align:center}.logo b{color:var(--ac)}
+.tabs{display:flex;gap:6px;margin:16px 0}.tabs button{flex:1}
+.f{display:flex;flex-direction:column;gap:10px}
+.err{color:var(--bad);font-size:13px;min-height:16px}
+#app{height:100%;display:none;flex-direction:row}
+nav{display:flex;flex-direction:column;gap:4px;padding:12px;margin:12px;width:210px;flex-shrink:0;overflow:auto}
+nav .logo{font-size:19px;margin:6px 0 10px}
+nav button{background:none;border:0;text-align:left;padding:10px 12px;border-radius:12px;cursor:pointer}
+nav button.on{background:linear-gradient(135deg,#3b82f6,#22d3ee);color:#fff}
+nav .sp{flex:1}
+main{flex:1;overflow:auto;padding:12px 12px 12px 0;min-width:0}
+.card{padding:18px;margin-bottom:12px}
+h2{margin:0 0 4px}.mu{color:var(--mu);font-size:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chat{height:calc(100vh - 250px);min-height:260px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:6px}
+.m{max-width:85%;padding:10px 14px;border-radius:16px;white-space:pre-wrap;word-wrap:break-word}
+.m.u{align-self:flex-end;background:linear-gradient(135deg,#3b82f6,#22d3ee);color:#fff}
+.m.b{align-self:flex-start;background:var(--in);border:1px solid var(--bd)}
+.pill{padding:3px 12px;border-radius:99px;font-weight:700;font-size:13px;color:#fff}
+.safe{background:var(--ok)}.warn{background:var(--wn)}.bad{background:var(--bad)}
+.it{padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.bar{height:10px;border-radius:9px;background:var(--in);overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,#3b82f6,#22d3ee)}
+canvas{width:100%;max-width:340px;aspect-ratio:1;display:block;margin:auto}
+.mod{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px;z-index:9}
+.mod .g{max-width:560px;max-height:80vh;overflow:auto;padding:22px;background:var(--bg)}
+#dr{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+.feed .it{font-size:13px}
+@media(max-width:780px){#app{flex-direction:column-reverse}nav{flex-direction:row;width:auto;margin:0 8px 8px;padding:6px;overflow-x:auto}nav .logo,nav .sp{display:none}nav button{white-space:nowrap;padding:9px 10px;font-size:13px}main{padding:8px}.chat{height:calc(100vh - 300px)}}
+.btn{box-shadow:inset 0 1px 1px rgba(255,255,255,.65),inset 0 -6px 12px rgba(255,255,255,.12),0 8px 22px rgba(40,110,240,.35);border-radius:16px}.btn.s{box-shadow:inset 0 1px 1px rgba(255,255,255,.4)}input,textarea{border-radius:16px;box-shadow:inset 0 1px 3px rgba(0,0,0,.15)}.m{border-radius:20px}nav button{border-radius:16px}
+.btn,.m.u,.bar i{background:linear-gradient(135deg,#2dd4bf,#7ff5e3);color:#062a26;box-shadow:none}.btn.s{background:var(--in);color:var(--tx);box-shadow:inset 0 0 0 1px var(--bd)}
+nav button.on{background:rgba(255,255,255,.13);color:var(--tx);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}nav button:hover{background:rgba(255,255,255,.07)}
+.chat{height:calc(100vh - 330px)}.hdr{padding:10px 16px;margin-bottom:12px;gap:12px}.chip{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#2dd4bf,#7ff5e3);color:#062a26;font-weight:700}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:12px}.grid3 .card,.grid2 .card{margin:0}
+.tile{cursor:pointer;min-height:150px;transition:.2s}.tile:hover{transform:translateY(-3px);background:rgba(255,255,255,.12)}.ic{font-size:54px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.5))}
+.met{flex:1;min-width:80px;padding:12px;border-radius:16px;background:var(--in);text-align:center}.met b{display:block;font-size:24px}.met span{color:var(--mu);font-size:12px}.tip{cursor:pointer}.tip:hover{color:var(--ac)}
+:root{--bg:#0b0c0d;--gl:rgba(255,255,255,.07);--bd:rgba(255,255,255,.12);--ac:#8ff0c0;--sh:rgba(0,0,0,.6)}
+.bg{background:radial-gradient(110% 80% at 15% 0%,#1a241f,#0b0c0d 60%)}.bg i:nth-child(1){background:#1f4d36;opacity:.45}.bg i:nth-child(2){background:#3a3d42;opacity:.4}.bg i:nth-child(3){background:#2a5a3f;opacity:.3}.bg i:nth-child(4){background:#25272b}
+.g{background:linear-gradient(150deg,rgba(255,255,255,.13),rgba(255,255,255,.04) 55%,rgba(255,255,255,.06));backdrop-filter:blur(30px) saturate(1.25);-webkit-backdrop-filter:blur(30px) saturate(1.25);border:1px solid var(--bd);border-radius:22px;box-shadow:0 18px 40px var(--sh),inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(255,255,255,.04)}
+#app{max-width:1360px;margin:12px auto 0;height:calc(100% - 24px);border:1px solid rgba(255,255,255,.16);border-radius:34px;background:rgba(8,9,10,.5);box-shadow:0 0 0 8px rgba(0,0,0,.6),0 40px 100px rgba(0,0,0,.65);overflow:hidden}
+nav{margin:14px 0 14px 14px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02))}main{padding:14px}
+.btn,.m.u,.bar i,.chip{background:linear-gradient(135deg,#8ff0c0,#d7fbe8);color:#0a2418}.btn.s{background:var(--in);color:var(--tx)}
+.grid3{padding-top:26px;gap:14px}.tile{padding:16px 16px 16px 118px;min-height:110px;margin-top:0;overflow:visible}.ic{position:absolute;left:12px;top:-24px;width:96px;height:96px;font-size:0;filter:drop-shadow(0 16px 14px rgba(0,0,0,.55))}.ic svg{width:100%;height:100%}
+.tile b{font-size:17px}.hdr{border-radius:999px;padding:8px 18px}.met{background:rgba(255,255,255,.06);border:1px solid var(--bd)}
+@media(max-width:780px){#app{margin:0;height:100%;border-radius:0;border:0;box-shadow:none}nav{margin:0 8px 8px}main{padding:8px}}
+:root{--bg:#000;--gl:rgba(255,255,255,.06);--bd:rgba(255,255,255,.10)}
+body{background:#000}.bg{background:#000}.bg i:nth-child(1){background:#1c4a33;opacity:.22;filter:blur(110px)}.bg i:nth-child(2){background:#30343a;opacity:.2;filter:blur(110px)}.bg i:nth-child(3){background:#245238;opacity:.16;filter:blur(110px)}.bg i:nth-child(4){background:#26282c;opacity:.2;filter:blur(110px)}
+#app{background:rgba(0,0,0,.6);border-color:rgba(255,255,255,.12)}
+
+/* ===== Dark Bento · Colour-morphism · 3D ===== */
+:root{--ac:#fbbf24;--vi:#a78bfa;--bd:rgba(255,255,255,.12)}
+body,.bg{background:#07060b}
+.bg{background:radial-gradient(60% 50% at 8% 0%,rgba(251,191,36,.28),transparent 70%),radial-gradient(60% 55% at 100% 100%,rgba(139,92,246,.34),transparent 70%),radial-gradient(40% 40% at 60% 20%,rgba(139,92,246,.12),transparent 70%),#07060b}
+.bg i{display:none}
+.g{backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.03))}
+.btn,.m.u,.bar i,.chip{background:linear-gradient(135deg,#fbbf24,#a78bfa);color:#1a1033}
+nav button.on{background:linear-gradient(135deg,rgba(251,191,36,.22),rgba(167,139,250,.22));box-shadow:inset 0 0 0 1px rgba(251,191,36,.4)}
+.tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .18s ease-out;will-change:transform;overflow:hidden}
+.tilt::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.13),transparent 60%);opacity:0;transition:opacity .2s}
+.tilt:hover::after{opacity:1}
+.tile.tilt{overflow:visible}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.bento .card{margin:0;min-height:190px}
+.b1{grid-column:span 4}.b2{grid-column:span 2}.b3{grid-column:span 4}.b4{grid-column:span 2}
+.bento h3{margin:6px 0 12px;font-size:20px;letter-spacing:-.01em}
+.tag{font-size:12px;padding:3px 10px;border-radius:99px;background:rgba(167,139,250,.16);border:1px solid rgba(167,139,250,.35);color:#d8ccff}
+.b1{background:radial-gradient(70% 90% at 0% 0%,rgba(251,191,36,.18),transparent 60%),linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.02))}
+.b3{background:radial-gradient(70% 90% at 100% 100%,rgba(139,92,246,.24),transparent 60%),linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.02))}
+.int{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip2{padding:6px 12px;border-radius:99px;font-size:13px;background:rgba(255,255,255,.07);border:1px solid var(--bd)}.chip2.ok{color:#86efac}.chip2.no{color:#fb923c}
+.mchip{padding:7px 14px;border-radius:99px;border:1px solid var(--bd);background:rgba(255,255,255,.06);cursor:pointer}
+.mchip.on{background:linear-gradient(135deg,#fbbf24,#a78bfa);color:#1a1033;font-weight:700;border-color:transparent}
+.mini{height:96px;margin:4px 0 10px;border-radius:50%;width:96px;background:radial-gradient(circle,rgba(74,222,128,.18),rgba(2,14,6,.9) 70%);border:2px solid rgba(74,222,128,.45);box-shadow:0 0 30px rgba(74,222,128,.25);position:relative;overflow:hidden}
+.mini i{position:absolute;inset:0;background:conic-gradient(from 0deg,transparent 0 80%,rgba(74,222,128,.6));animation:sp 3s linear infinite}
+@keyframes sp{to{transform:rotate(1turn)}}
+#cv{border-radius:50%;border:2px solid rgba(74,222,128,.45);box-shadow:0 0 50px rgba(74,222,128,.25),inset 0 0 40px rgba(74,222,128,.15)}
+.grid3{margin-top:26px}
+@media(max-width:780px){.bento{grid-template-columns:1fr}.b1,.b2,.b3,.b4{grid-column:auto}}
+@media(prefers-reduced-motion:reduce){.tilt{transform:none!important}.mini i{animation:none}}
+
+.dots{display:inline-flex;gap:4px;align-items:center;height:18px}.dots i{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.4;animation:db 1s infinite}.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}@keyframes db{50%{opacity:1;transform:translateY(-3px)}}
+.ws{max-width:820px;margin:7vh auto 0;text-align:center}.ws h1{font-size:clamp(26px,4vw,40px);letter-spacing:-.02em;margin:0 0 8px}
+.promptbox{padding:14px;margin:22px 0;text-align:left}.promptbox textarea{border:0;background:transparent;box-shadow:none;resize:none;font-size:16px;padding:6px}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.qc{padding:18px;text-align:left;cursor:pointer;transition:.2s}.qc .qi{font-size:28px;margin-bottom:6px}
+/* ===== DAY MODE: clean creation workspace, red accent ===== */
+:root[data-theme="light"]{--bg:#f6f6f8;--tx:#16161a;--mu:#6b6b76;--bd:rgba(20,20,30,.10);--in:#fff;--sh:rgba(20,20,40,.08);--ac:#e11d2e}
+:root[data-theme="light"] body{background:#f6f6f8}
+:root[data-theme="light"] .bg{background:radial-gradient(50% 40% at 50% 0%,rgba(225,29,46,.09),transparent 70%),#f6f6f8}
+:root[data-theme="light"] .g{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none;border:1px solid rgba(20,20,30,.08);box-shadow:0 1px 2px rgba(20,20,40,.04),0 8px 24px rgba(20,20,40,.06)}
+:root[data-theme="light"] #app{background:transparent;border-color:rgba(20,20,30,.08);box-shadow:none}
+:root[data-theme="light"] nav{background:#fff}
+:root[data-theme="light"] .btn,:root[data-theme="light"] .m.u,:root[data-theme="light"] .bar i,:root[data-theme="light"] .chip{background:linear-gradient(135deg,#ff4457,#e11d2e);color:#fff;box-shadow:0 6px 18px rgba(225,29,46,.28)}
+:root[data-theme="light"] .btn.s{background:#fff;color:var(--tx);box-shadow:inset 0 0 0 1px var(--bd)}
+:root[data-theme="light"] .bar i{box-shadow:none}
+:root[data-theme="light"] nav button.on{background:rgba(225,29,46,.08);color:#e11d2e;box-shadow:inset 0 0 0 1px rgba(225,29,46,.25)}
+:root[data-theme="light"] nav button:hover{background:rgba(20,20,30,.04)}
+:root[data-theme="light"] input,:root[data-theme="light"] textarea{background:#fff;box-shadow:none}
+:root[data-theme="light"] input:focus,:root[data-theme="light"] textarea:focus{border-color:#e11d2e}
+:root[data-theme="light"] .m.b{background:#f1f1f4;border-color:transparent}
+:root[data-theme="light"] .met{background:#f6f6f8;border-color:var(--bd)}
+:root[data-theme="light"] .mchip{background:#fff}
+:root[data-theme="light"] .mchip.on{background:linear-gradient(135deg,#ff4457,#e11d2e);color:#fff}
+:root[data-theme="light"] .promptbox:focus-within,:root[data-theme="light"] .qc:hover{box-shadow:0 0 0 1px rgba(225,29,46,.45),0 10px 34px rgba(225,29,46,.16)}
+:root[data-theme="light"] .tag{background:rgba(225,29,46,.08);border-color:rgba(225,29,46,.25);color:#b4141f}
+:root[data-theme="light"] a,:root[data-theme="light"] .tip:hover{color:#e11d2e}
+
+/* ===== CyberShield AI Pro: logo + chat polish ===== */
+.lg{width:28px;height:28px;border-radius:8px;vertical-align:middle;margin-right:4px}.lg.big{display:block;width:84px;height:84px;border-radius:20px;margin:0 auto 10px;box-shadow:0 0 34px rgba(255,30,40,.35)}
+nav .logo{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;white-space:nowrap}nav .logo .lg{flex:none;margin:0}.logo .tag{font-size:10px;padding:1px 6px;flex:none;vertical-align:middle;background:rgba(255,40,50,.16);border-color:rgba(255,40,50,.45);color:#ff8a92;font-weight:700;letter-spacing:.06em}
+.scr{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}.scr .mchip{flex:none;white-space:nowrap}
+.chat{height:calc(100vh - 380px);min-height:220px}@media(max-width:780px){.chat{height:calc(100vh - 400px)}nav .logo{display:none}.row:has(#q){flex-wrap:wrap!important}#q{flex:1 1 100%}}
+.m.b{line-height:1.5}.m.b b{font-weight:700}.m .ic2{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;padding:1px 6px;border-radius:6px;background:rgba(255,255,255,.09)}
+.cb{margin:8px 0;border-radius:12px;overflow:hidden;border:1px solid var(--bd);background:#06070a;white-space:normal}
+.cb .ch2{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;font-size:12px;color:#9aa4ad;background:rgba(255,255,255,.06)}
+.cb .ch2 button{background:none;border:1px solid var(--bd);border-radius:8px;padding:2px 9px;font-size:12px;cursor:pointer}.cb .ch2 button:hover{border-color:#ff4457;color:#ff8a92}
+.cb pre{margin:0;padding:10px 12px;overflow:auto;white-space:pre;font:12.5px/1.5 ui-monospace,Menlo,Consolas,monospace;color:#e6edf3}
+:root[data-theme="light"] .cb{background:#10131a}
+.m .act{margin-top:6px;font-size:12px}.m .act a{color:var(--mu)}.m .act a:hover{color:var(--ac)}
+
+/* ===== NEON GLASS (glassmorphism) · dark mode ===== */
+:root:not([data-theme="light"]){--ac:#ff4d6d;--neon:#ff2a4d;--neon2:#ff3df2;--cy:#33e1ff;--gb:rgba(255,255,255,.055);--gbd:rgba(255,255,255,.16);--glow:rgba(255,42,77,.35)}
+:root:not([data-theme="light"]) body,:root:not([data-theme="light"]) .bg{background:#04040a}
+:root:not([data-theme="light"]) .bg{background:radial-gradient(70% 55% at 50% 0%,rgba(255,42,77,.10),transparent 70%),#04040a}
+:root:not([data-theme="light"]) .bg i{display:block;filter:blur(70px);opacity:.55;mix-blend-mode:screen}
+:root:not([data-theme="light"]) .bg i:nth-child(1){background:#ff1744;opacity:.42;width:46vmax;height:46vmax;left:-12vmax;top:-14vmax}
+:root:not([data-theme="light"]) .bg i:nth-child(2){background:#b300ff;opacity:.34;width:42vmax;height:42vmax;right:-14vmax;top:4vmax}
+:root:not([data-theme="light"]) .bg i:nth-child(3){background:#00c8ff;opacity:.22;width:40vmax;height:40vmax;left:20vmax;bottom:-26vmax}
+:root:not([data-theme="light"]) .bg i:nth-child(4){background:#ff2a9d;opacity:.26;width:28vmax;height:28vmax;right:6vmax;bottom:-8vmax}
+:root:not([data-theme="light"]) .bg::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:radial-gradient(70% 60% at 50% 40%,#000,transparent 85%);mask-image:radial-gradient(70% 60% at 50% 40%,#000,transparent 85%)}
+/* glass panels */
+:root:not([data-theme="light"]) .g{background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025) 55%,rgba(255,255,255,.05));backdrop-filter:blur(22px) saturate(1.7);-webkit-backdrop-filter:blur(22px) saturate(1.7);border:1px solid var(--gbd);box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 0 1px rgba(255,42,77,.06),0 0 30px rgba(255,42,77,.10),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(255,255,255,.04),inset 0 0 40px rgba(255,255,255,.025)}
+:root:not([data-theme="light"]) .g::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(140deg,rgba(255,77,109,.55),rgba(255,255,255,.04) 35%,rgba(255,255,255,0) 60%,rgba(51,225,255,.35));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.8}
+:root:not([data-theme="light"]) .g:hover{box-shadow:0 22px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,42,77,.18),0 0 44px rgba(255,42,77,.22),inset 0 1px 0 rgba(255,255,255,.34)}
+:root:not([data-theme="light"]) #app{background:rgba(6,6,12,.45);border:1px solid rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,42,77,.14),0 0 60px rgba(255,42,77,.16),0 40px 100px rgba(0,0,0,.7)}
+:root:not([data-theme="light"]) .mod .g{background:rgba(14,14,22,.78)}
+/* neon buttons */
+:root:not([data-theme="light"]) .btn,:root:not([data-theme="light"]) .m.u,:root:not([data-theme="light"]) .chip,:root:not([data-theme="light"]) .mchip.on{background:linear-gradient(135deg,#ff2a4d,#ff3df2);color:#fff;text-shadow:0 0 8px rgba(255,255,255,.35);border-color:rgba(255,255,255,.25);box-shadow:0 0 0 1px rgba(255,255,255,.18) inset,0 0 18px rgba(255,42,77,.55),0 6px 26px rgba(255,61,242,.28)}
+:root:not([data-theme="light"]) .btn{transition:box-shadow .2s,transform .12s}.btn:hover{filter:brightness(1.1)}
+:root:not([data-theme="light"]) .btn:hover{box-shadow:0 0 0 1px rgba(255,255,255,.28) inset,0 0 28px rgba(255,42,77,.85),0 8px 34px rgba(255,61,242,.4)}
+:root:not([data-theme="light"]) .btn.s{background:rgba(255,255,255,.07);color:var(--tx);text-shadow:none;border:1px solid var(--gbd);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);backdrop-filter:blur(10px)}
+:root:not([data-theme="light"]) .btn.s:hover{border-color:rgba(255,77,109,.7);box-shadow:0 0 18px rgba(255,42,77,.4),inset 0 1px 0 rgba(255,255,255,.22)}
+:root:not([data-theme="light"]) .bar i{background:linear-gradient(90deg,#ff2a4d,#ff3df2,#33e1ff);box-shadow:0 0 14px rgba(255,42,77,.8)}
+:root:not([data-theme="light"]) .bar{background:rgba(255,255,255,.07);box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}
+/* inputs + chips */
+:root:not([data-theme="light"]) input,:root:not([data-theme="light"]) textarea{background:rgba(255,255,255,.055);border:1px solid var(--gbd);backdrop-filter:blur(8px);box-shadow:inset 0 2px 8px rgba(0,0,0,.35)}
+:root:not([data-theme="light"]) input:focus,:root:not([data-theme="light"]) textarea:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(255,42,77,.2),0 0 22px rgba(255,42,77,.35),inset 0 2px 8px rgba(0,0,0,.3)}
+:root:not([data-theme="light"]) .mchip{background:rgba(255,255,255,.06);backdrop-filter:blur(8px);transition:.2s}
+:root:not([data-theme="light"]) .mchip:hover{border-color:rgba(255,77,109,.7);box-shadow:0 0 16px rgba(255,42,77,.35)}
+:root:not([data-theme="light"]) .tag{background:rgba(255,42,77,.12);border-color:rgba(255,77,109,.5);color:#ff9bb0;box-shadow:0 0 12px rgba(255,42,77,.25)}
+:root:not([data-theme="light"]) .chip2{background:rgba(255,255,255,.06);backdrop-filter:blur(8px)}
+:root:not([data-theme="light"]) .met{background:rgba(255,255,255,.05);border:1px solid var(--gbd);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+:root:not([data-theme="light"]) .met b{text-shadow:0 0 16px rgba(255,77,109,.7)}
+/* nav */
+:root:not([data-theme="light"]) nav button:hover{background:rgba(255,255,255,.07)}
+:root:not([data-theme="light"]) nav button.on{background:linear-gradient(135deg,rgba(255,42,77,.28),rgba(255,61,242,.18));box-shadow:inset 0 0 0 1px rgba(255,77,109,.6),0 0 20px rgba(255,42,77,.35);text-shadow:0 0 10px rgba(255,255,255,.4)}
+:root:not([data-theme="light"]) nav .logo b{color:#ff4d6d;text-shadow:0 0 14px rgba(255,42,77,.9)}
+:root:not([data-theme="light"]) .logo b{color:#ff4d6d;text-shadow:0 0 14px rgba(255,42,77,.9)}
+/* chat */
+:root:not([data-theme="light"]) .m.b{background:rgba(255,255,255,.06);border:1px solid var(--gbd);backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 6px 20px rgba(0,0,0,.3)}
+:root:not([data-theme="light"]) .m.u{border-radius:20px 20px 6px 20px}
+:root:not([data-theme="light"]) .m.b{border-radius:20px 20px 20px 6px}
+:root:not([data-theme="light"]) .cb{background:rgba(2,2,8,.7);border-color:rgba(51,225,255,.28);box-shadow:0 0 18px rgba(51,225,255,.10)}
+:root:not([data-theme="light"]) .cb pre{color:#b9f3ff}
+/* bento / tiles / auth / pills */
+:root:not([data-theme="light"]) .b1{background:radial-gradient(70% 90% at 0% 0%,rgba(255,42,77,.22),transparent 60%),linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.02))}
+:root:not([data-theme="light"]) .b3{background:radial-gradient(70% 90% at 100% 100%,rgba(255,61,242,.22),transparent 60%),linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.02))}
+:root:not([data-theme="light"]) .tile:hover{background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.04))}
+:root:not([data-theme="light"]) .pill{box-shadow:0 0 14px currentColor;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+:root:not([data-theme="light"]) .pill.safe{background:rgba(34,197,94,.9);box-shadow:0 0 16px rgba(34,197,94,.6)}
+:root:not([data-theme="light"]) .pill.warn{background:rgba(250,204,21,.92);color:#2a1d00;box-shadow:0 0 16px rgba(250,204,21,.55)}
+:root:not([data-theme="light"]) .pill.bad{background:rgba(255,42,77,.92);box-shadow:0 0 18px rgba(255,42,77,.75)}
+:root:not([data-theme="light"]) .lg.big{box-shadow:0 0 0 1px rgba(255,255,255,.18),0 0 40px rgba(255,42,77,.65),0 0 90px rgba(255,42,77,.3);animation:pulse 3.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 1px rgba(255,255,255,.25),0 0 56px rgba(255,42,77,.9),0 0 120px rgba(255,61,242,.4)}}
+:root:not([data-theme="light"]) .it{border-bottom-color:rgba(255,255,255,.09)}
+:root:not([data-theme="light"]) a{color:#ff7a93}
+:root:not([data-theme="light"]) ::selection{background:rgba(255,42,77,.5)}
+:root:not([data-theme="light"]) *{scrollbar-color:rgba(255,77,109,.5) transparent}
+:root:not([data-theme="light"]) ::-webkit-scrollbar{width:8px;height:8px}:root:not([data-theme="light"]) ::-webkit-scrollbar-thumb{background:rgba(255,77,109,.45);border-radius:9px}
+/* radar: neon red-cyan instead of green */
+:root:not([data-theme="light"]) #cv{border-color:rgba(51,225,255,.5);box-shadow:0 0 50px rgba(51,225,255,.28),inset 0 0 40px rgba(51,225,255,.14)}
+:root:not([data-theme="light"]) .mini{border-color:rgba(51,225,255,.5);box-shadow:0 0 30px rgba(51,225,255,.3)}
+@media(prefers-reduced-motion:reduce){.lg.big{animation:none}.bg i{animation:none}}
+@media(max-width:780px){:root:not([data-theme="light"]) .g{backdrop-filter:blur(14px) saturate(1.5);-webkit-backdrop-filter:blur(14px) saturate(1.5)}}
+/* light mode: keep it clean, add soft frosted glass */
+:root[data-theme="light"] .g{background:rgba(255,255,255,.7);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.9);box-shadow:0 8px 30px rgba(225,29,46,.08),inset 0 1px 0 #fff}
+:root[data-theme="light"] .bg{background:radial-gradient(50% 40% at 15% 0%,rgba(255,61,110,.18),transparent 70%),radial-gradient(45% 40% at 95% 100%,rgba(179,0,255,.12),transparent 70%),#f6f6f8}
+</style></head><body><div class="bg"><i></i><i></i><i></i><i></i></div>
+<div id="auth"><div class="g box"><img class="lg big" src="logo-v2.png" alt="CyberShield AI Pro"><div class="logo">Cyber<b>Shield</b> AI <span class="tag">PRO</span></div><p class="mu" style="text-align:center;margin:4px 0">Your personal cyber security companion</p>
+<div class="tabs"><button class="btn" id="tS" onclick="mode('in')">Sign In</button><button class="btn s" id="tU" onclick="mode('up')">Sign Up</button></div>
+<div class="f"><input id="nm" placeholder="Full name" style="display:none"><input id="em" type="email" placeholder="Email"><input id="pw" type="password" placeholder="Password (min 8 chars)">
+<label id="tc" class="mu" style="display:none"><input type="checkbox" id="ck" style="width:auto"> I accept the <a onclick="legal('t')">Terms</a> &amp; <a onclick="legal('l')">License</a></label>
+<div class="err" id="er"></div><button class="btn" onclick="submitAuth()" id="go">Sign In</button></div></div></div>
+<div id="app"><nav class="g" id="nav"></nav><main id="main"></main></div><div id="modal"></div>
+<script>
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const st={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let me=null,view='chat',bot='cyber',hist={cyber:[]};
+const sha=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+/* THEME */
+function theme(t){const r=document.documentElement;if(t)r.dataset.theme=t;st.set('theme',t||null)}
+function toggleTheme(){const d=document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;theme(d?'light':'dark');window.rainTheme&&rainTheme();render()}
+document.documentElement.dataset.theme=st.get('theme',null)||'dark';
+const isDark=()=>document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+/* AUTH */
+let am='in',TOK=st.get('tok',null);
+let BASE='';async function api(p,m,b){for(let k=0;k<2;k++){try{const r=await fetch(BASE+p,{method:m||'GET',headers:{'content-type':'application/json',...(TOK?{authorization:'Bearer '+TOK}:{})},body:b?JSON.stringify(b):undefined});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Server error');return j}catch(e){if(e instanceof TypeError){if(!k&&!BASE&&location.origin!=='http://localhost:3100'){BASE='http://localhost:3100';continue}throw new Error('Cannot reach the server. Run run-windows.bat (or: node server.js) and open http://localhost:3100')}throw e}}}
+let otpStep=false;
+function mode(m){am=m;otpStep=false;$('nm').style.display=$('tc').style.display=m==='up'?'block':'none';$('go').textContent=m==='up'?'Create Account':'Sign In';$('tS').className='btn'+(m==='in'?'':' s');$('tU').className='btn'+(m==='up'?'':' s');$('er').textContent='';$('er').style.color=''}
+function fin(r){TOK=r.token;st.set('tok',TOK);start(r.user)}
+async function submitAuth(){const er=$('er');er.style.color='';er.textContent='';
+ try{
+  const e=$('em').value.trim().toLowerCase(),p=$('pw').value;
+  if(!/^\S+@\S+\.\S+$/.test(e))return er.textContent='Enter a valid email.';
+  if(p.length<8)return er.textContent='Password must be at least 8 characters.';
+  if(am==='up'){if(!$('nm').value.trim())return er.textContent='Enter your name.';if(!$('ck').checked)return er.textContent='Please accept the Terms & License.';
+   const r=await api('/api/signup','POST',{name:$('nm').value.trim(),email:e,password:p});
+   
+   return fin(r)}
+  fin(await api('/api/login','POST',{email:e,password:p}))}catch(x){er.textContent=x.message}}
+function start(u){me=u;$('auth').style.display='none';$('app').style.display='flex';hist={cyber:((st.get('hist_'+u.email,{cyber:[]})||{}).cyber)||[]};go('home')}
+function saveMe(){api('/api/me','PUT',{name:me.name,scans:me.scans,done:me.done}).catch(()=>{})}
+function logout(){st.set('tok',null);location.reload()}
+/* NAV */
+const pages=[['home','🏠 Overview'],['chat','💬 AI Chat'],['radar','📡 Radar'],['scan','🦠 Virus Scanner'],['link','🔗 Link Analysis'],['fraud','🚨 Fraud Detector'],['pw','🔑 Password Tools'],['tools','🧰 Hash & Encode'],['ioc','🧪 IOC Extractor'],['lessons','🎓 Lessons'],['hist','🕘 Activity'],['profile','👤 Profile']];
+function go(v){view=v;render()}
+function render(){$('nav').innerHTML='<div class="logo"><img class="lg" src="logo-v2.png" alt=""><span>Cyber<b>Shield</b></span><span class="tag">PRO</span></div>'+pages.map(p=>`<button class="${p[0]===view?'on':''}" onclick="go('${p[0]}')">${p[1]}</button>`).join('')+'<div class="sp"></div>'+(matchMedia('(display-mode: standalone)').matches?'':'<button onclick="doInstall()">📲 Install app</button>')+'<button onclick="toggleTheme()">'+(isDark()?'☀️ Day mode':'🌙 Night mode')+'</button>';
+ stopRadar();({home:vHome,chat:vChat,radar:vRadar,scan:vScan,link:vLink,fraud:vFraud,lessons:vLessons,profile:vProfile,pw:vPw,tools:vTools,ioc:vIoc,hist:vHist})[view]()}
+const hdr=()=>{const n=new Date();return `<div class="g card row hdr"><span>📅 ${n.toLocaleDateString(undefined,{day:'numeric',month:'long',year:'numeric'})} · ${n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span><span class="pill safe">🛡 Protected</span><span style="flex:1"></span><span class="mu">${esc(me.name||'')}</span><span class="chip">${esc((me.name||'?')[0].toUpperCase())}</span></div>`};
+const M=h=>$('main').innerHTML=hdr()+h;
+function askAI(t){bot='cyber';go('chat');$('q').value=t;send()}
+const ICO={scan:'<svg viewBox="0 0 96 96"><defs><linearGradient id="ia" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b6f5d0"/><stop offset="1" stop-color="#1f8a5b"/></linearGradient></defs><path d="M48 6l34 12v26c0 22-15 38-34 46C29 82 14 66 14 44V18z" fill="url(#ia)"/><path d="M48 14l26 9v21c0 16-11 29-26 36" fill="rgba(255,255,255,.25)"/><path d="M34 46l10 10 20-22" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',link:'<svg viewBox="0 0 96 96"><defs><linearGradient id="ib" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e0f2ff"/><stop offset="1" stop-color="#3b82c4"/></linearGradient></defs><g transform="rotate(-35 48 48)" fill="none" stroke="url(#ib)" stroke-width="10"><rect x="6" y="32" width="46" height="32" rx="16"/><rect x="44" y="32" width="46" height="32" rx="16"/></g></svg>',fraud:'<svg viewBox="0 0 96 96"><defs><linearGradient id="ic" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffeaa8"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><path d="M48 12l38 66H10z" fill="url(#ic)" stroke="url(#ic)" stroke-width="8" stroke-linejoin="round"/><rect x="44" y="34" width="8" height="24" rx="4" fill="#5a3a00"/><circle cx="48" cy="67" r="5" fill="#5a3a00"/></svg>'};
+let spd=st.get('spd','fast');
+const modes=()=>[['fast','⚡ Fast'],['balanced','⚖ Balanced'],['deep','🧠 Deep']].map(m=>`<button class="mchip ${spd===m[0]?'on':''}" onclick="setSpd('${m[0]}')">${m[1]}</button>`).join('');
+function setSpd(m){spd=m;st.set('spd',m);render()}
+function hq(){const t=$('hq').value.trim();if(t)askAI(t)}
+function vHome(){isDark()?vHomeDark():vHomeLight()}
+function vHomeLight(){const Q=[['scan','🦠','Virus Scanner','Scan any file safely'],['link','🔗','Link Analysis','Spot phishing links'],['fraud','🚨','Fraud Detector','Check a message'],['radar','📡','Security Radar','Manual power-on sweep']];
+M(`<div class="ws"><h1>What do you want to secure today?</h1><p class="mu">Fast, focused cyber help. Ask, scan or analyse in one place.</p>
+<div class="g promptbox"><textarea id="hq" rows="2" placeholder="Ask about a scam, OTP, link or password…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();hq()}"></textarea><div class="row" style="margin-top:8px">${modes()}<span style="flex:1"></span><button class="btn" onclick="hq()">Ask ➤</button></div></div>
+<div class="quick">${Q.map(c=>`<div class="g qc" onclick="go('${c[0]}')"><div class="qi">${c[1]}</div><b>${c[2]}</b><div class="mu">${c[3]}</div></div>`).join('')}</div>
+<div class="g qc up" onclick="go('lessons')" style="margin-top:14px;display:flex;align-items:center;gap:12px"><div style="flex:1"><b>Level up your cyber skills</b><div class="mu">Short lessons with quizzes</div></div><span class="btn">Start learning</span></div></div>`)}
+function vHomeDark(){const d=me.done||[],days=Math.max(1,Math.ceil((Date.now()-me.joined)/864e5));
+M(`<div class="bento"><div class="g card tilt b1"><span class="tag">Visibility Metrics</span><h3>Security posture</h3><div class="row"><div class="met"><b>${me.scans}</b><span>Scans</span></div><div class="met"><b>${d.length}/${LS.length}</b><span>Lessons</span></div><div class="met"><b>${days}d</b><span>Member</span></div></div><div class="int" id="int"><span class="chip2">Server…</span><span class="chip2">AI…</span><span class="chip2">DB…</span></div></div>
+<div class="g card tilt b2"><span class="tag">Threat Signals</span><h3>Live activity</h3><div id="sig" class="mu">Loading…</div></div>
+<div class="g card tilt b3"><span class="tag">Prompt Intelligence</span><h3>Ask CyberShield AI</h3><div class="row" style="flex-wrap:nowrap"><input id="hq" placeholder="Scam, OTP, suspicious link…" onkeydown="if(event.key==='Enter')hq()"><button class="btn" onclick="hq()">Ask</button></div><div class="row" style="margin-top:10px">${modes()}</div></div>
+<div class="g card tilt b4" onclick="go('radar')" style="cursor:pointer"><span class="tag">Radar</span><h3>Security Radar</h3><div class="mini"><i></i></div><div class="mu">Starts only when you power it on</div></div></div>
+<div class="grid3">${[['scan','Virus Scanner','Scan files on your device'],['link','Link Analysis','Check links for phishing'],['fraud','Fraud Detector','Paste a suspicious message']].map(c=>`<div class="g card tile tilt" onclick="go('${c[0]}')"><div class="ic">${ICO[c[0]]}</div><b>${c[1]}</b><div class="mu">${c[2]}</div></div>`).join('')}</div>`);homeLive()}
+async function homeLive(){try{const t=performance.now(),j=await api('/api/health'),ms=Math.round(performance.now()-t),e=$('int');if(e)e.innerHTML=`<span class="chip2 ok">● Server ${ms}ms</span><span class="chip2 ${j.ai.up?'ok':'no'}">● ${j.ai.up?esc(j.ai.model)+(j.ai.fallback?' · low-RAM':''):'AI offline'}</span><span class="chip2 ok">● ${esc(j.db)}</span>`}catch(x){}
+try{const r=await api('/api/history'),s=$('sig');if(s)s.innerHTML=r.items.slice(0,5).map(i=>`<div class="it"><span class="pill ${i.score>=60?'bad':i.score>=25?'warn':'safe'}">${i.score}</span> ${esc(i.type)}</div>`).join('')||'No signals yet. Run a scan.'}catch(x){}}
+const RES=[],plain=h=>new DOMParser().parseFromString(String(h),'text/html').body.textContent;
+function verdict(score,items,title){setTimeout(()=>api('/api/log','POST',{type:title,score:Math.min(100,score)}).catch(()=>{}),0);const c=score>=60?'bad':score>=25?'warn':'safe',l=score>=60?'DANGEROUS':score>=25?'SUSPICIOUS':'LOOKS SAFE';
+ const k=RES.push({title,score:Math.min(100,score),items:items.map(plain)})-1;if(RES.length>30){RES.shift()}
+ return `<div class="g card"><div class="row"><h2>${title}</h2><span class="pill ${c}">${l}</span></div><div class="bar"><i style="width:${Math.min(100,score)}%"></i></div><div class="mu">Risk score: ${Math.min(100,score)}/100</div>${items.length?items.map(i=>`<div class="it">${i}</div>`).join(''):'<div class="it">No warning signs found.</div>'}<div class="row" style="margin-top:12px"><button class="btn s" onclick="explainRes(${k})">🤖 Explain with AI</button></div></div>`}
+function explainRes(k){const r=RES[k]||RES[RES.length-1];if(!r)return;askAI(('Explain this security check result in simple words and tell me exactly what to do next.\n'+r.title+' - risk '+r.score+'/100\n'+r.items.map(x=>'- '+x).join('\n')).slice(0,1700))}
+/* CHAT (Cyber AI Pro): expert personas, rich formatting, stop / regenerate / export */
+const PERS=[['general','🛡 General'],['scam','🚨 Scam help'],['soc','🔵 SOC / Blue team'],['red','🔴 Pentest (authorized)'],['dfir','🧬 DFIR / Malware'],['cloud','☁️ Cloud / DevSecOps']];
+const SUG={general:['How do I spot a phishing SMS?','Create a simple password policy for a small office','Explain ransomware and how to recover'],scam:['en phone-ku OTP share pannitten, ippo enna pannanum?','Digital arrest call vanthuchu, enna pannanum?','Is a UPI collect request safe?'],soc:['How to detect Kerberoasting in a SIEM?','Detection ideas for encoded PowerShell','Triage steps for a suspicious logon alert'],red:['Methodology for an authorized web app pentest','How does SQL injection work and how do I fix it?','Nmap basics for my own lab network'],dfir:['First steps when a laptop has ransomware','How to analyse a suspicious exe safely?','Which logs show lateral movement?'],cloud:['Hardening checklist for an AWS account','How do I stop secrets leaking to GitHub?','Docker container security best practices']};
+const WELCOME='Hi! I\'m CyberShield AI Pro. Pick an expert mode above (Scam help, SOC, Pentest, DFIR, Cloud) and ask anything in cyber security: scams, hacked accounts, malware, network, web/app security, forensics, cloud and more. Tamil, Tanglish or English, ellam okay.';
+let persona=st.get('persona','general');if(!PERS.some(p=>p[0]===persona))persona='general';
+function setPersona(p){persona=p;st.set('persona',p);vChat()}
+const pers=()=>PERS.map(p=>`<button class="mchip ${persona===p[0]?'on':''}" onclick="setPersona('${p[0]}')">${p[1]}</button>`).join('');
+/* safe formatter: escape first, then turn ``` blocks, `code`, **bold**, bullets and ### lines into HTML */
+function fmt(t){const parts=String(t).split('```');return parts.map((p,i)=>{
+  if(i%2){const nl=p.indexOf('\n');let lang='',code=p;if(nl>=0&&/^[\w+#.-]{0,14}\s*$/.test(p.slice(0,nl))){lang=p.slice(0,nl).trim();code=p.slice(nl+1)}code=code.replace(/\n$/,'');
+   return `<div class="cb"><div class="ch2"><span>${esc(lang||'code')}</span><button onclick="cpCode(this)">Copy</button></div><pre><code>${esc(code)}</code></pre></div>`}
+  let h=esc(p).replace(/^#{1,4}\s+(.*)$/gm,'<b>$1</b>').replace(/^[ \t]*[*-][ \t]+/gm,'• ').replace(/`([^`\n]+)`/g,'<code class="ic2">$1</code>').replace(/\*\*([^*\n]+)\*\*/g,'<b>$1</b>');
+  if(i>0)h=h.replace(/^\n/,'');if(i<parts.length-1)h=h.replace(/\n$/,'');return h}).join('')}
+const flash=(b,t)=>{const o=b.textContent;b.textContent=t;setTimeout(()=>b.textContent=o,1200)};
+async function clip(t,b){try{await navigator.clipboard.writeText(t);flash(b,'✔ Copied')}catch(e){flash(b,'Press Ctrl+C')}}
+const cpCode=b=>clip(b.closest('.cb').querySelector('code').textContent,b),cpMsg=a=>clip(a.closest('.m').dataset.raw||'',a);
+function setBot(d,t,fin2){d.dataset.raw=t;d.innerHTML=fmt(t)+(fin2?'<div class="act"><a onclick="cpMsg(this)">📋 Copy</a></div>':'')}
+function vChat(){M(`<div class="g card"><div class="row"><h2>AI Chat</h2><span class="pill warn" id="ais">checking…</span><span style="flex:1"></span><span class="pill safe">🛡️ Cyber AI Pro</span></div><div class="row scr" style="margin:8px 0">${pers()}</div><div class="row scr" style="margin:0 0 8px">${modes()}</div><div class="chat" id="ch"></div><div class="row" id="sg" style="margin-bottom:8px"></div><div class="row" style="flex-wrap:nowrap"><input id="q" placeholder="Ask any cyber security question…" onkeydown="if(event.key==='Enter')busy?0:send()"><button class="btn" id="sb2" onclick="busy?stopAI():send()">Send</button><button class="btn s" onclick="regen()" title="Regenerate last answer">↻</button><button class="btn s" onclick="exportChat()" title="Export chat">⬇</button><button class="btn s" onclick="clr()" title="Clear chat">🗑</button></div></div>`);
+ const h=hist[bot];if(!h.length)h.push({r:'b',t:WELCOME,w:1});h.forEach(m=>bub(m,m.r==='b'&&!m.w&&!m.e));
+ const sg=$('sg');if(!h.some(m=>m.r==='u'))sg.innerHTML=SUG[persona].map((s,i)=>`<button class="mchip" onclick="$('q').value=SUG[persona][${i}];send()">${esc(s)}</button>`).join('');
+ aiStatus();setBusyUI()}
+async function aiStatus(){try{const r=await fetch(BASE+'/api/health',{cache:'no-store'}).then(x=>x.json()),e=$('ais');if(!e)return;if(!r.ai.up&&r.ai.pulling){e.className='pill warn';e.textContent='⏳ Downloading small AI model '+r.ai.pulling.pct+'%';setTimeout(aiStatus,5000);return}e.className='pill '+(r.ai.up?(r.ai.fallback?'warn':'safe'):'bad');e.textContent=r.ai.up?'🟢 '+r.ai.model+(r.ai.fallback?' · low-RAM fallback':''):'🔴 AI offline';e.title=r.ai.up?(r.ai.warn||('RAM free '+r.ai.freeGB+' / '+r.ai.ramGB+' GB')):(r.ai.error||'')}catch(e){}}
+function bub(m,fin2){const d=document.createElement('div');d.className='m '+m.r;if(m.r==='b')setBot(d,m.t,!!fin2);else d.textContent=m.t;$('ch').appendChild(d);$('ch').scrollTop=1e9;return d}
+const saveH=()=>{hist[bot]=hist[bot].slice(-40);st.set('hist_'+me.email,hist)};
+function clr(){hist[bot]=[];saveH();vChat()}
+function regen(){if(busy)return;const h=hist[bot];while(h.length&&h[h.length-1].r==='b'&&!h[h.length-1].w)h.pop();const l=h[h.length-1];if(!l||l.r!=='u')return;h.pop();saveH();vChat();$('q').value=l.t;send()}
+function exportChat(){const h=(hist[bot]||[]).filter(m=>!m.w);if(!h.length)return;const t=h.map(m=>(m.r==='u'?'You':'CyberShield AI Pro')+':\n'+m.t).join('\n\n---\n\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));a.download='cybershield-chat-'+new Date().toISOString().slice(0,10)+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2e3)}
+const IN=[[/^(hi+|hii+|hello+|hey+|hai+|helo|yo|sup|good (morning|afternoon|evening))\W*$/i,'Hi! 👋 How can I help you?','Hi! 👋 Ask me about scams, OTP, links, passwords or hacked accounts.'],[/^(vanakkam|vanakam|nalama|sugama|epadi irukka|eppadi irukka)\W*$/i,'Vanakkam! 👋 Enna help venum? Kelunga.','Vanakkam! 👋 Scam, OTP, link, hack, password. Edhu pathi venumaanalum kelunga.'],[/^(thanks?|thank you|thx|tq|nandri)\W*$/i,'You are welcome! 😊','You are welcome! 😊 Stay safe online.'],[/^(bye|goodbye|tata|see you|good night)\W*$/i,'Bye! 👋','Bye! 👋 Stay safe online.']];
+function instant(t,b){t=t.trim();if(t.length>40)return null;for(const x of IN)if(x[0].test(t))return b==='cyber'?x[2]:x[1];return null}
+let busy=false,ctl=null;
+function setBusyUI(){const b=$('sb2');if(b)b.textContent=busy?'■ Stop':'Send'}
+function stopAI(){ctl&&ctl.abort()}
+async function send(){const i=$('q'),t=i.value.trim();if(!t||busy)return;i.value='';const sg=$('sg');if(sg)sg.innerHTML='';const h=hist[bot];h.push({r:'u',t});bub({r:'u',t});const d=bub({r:'b',t:''});d.innerHTML='<span class="dots"><i></i><i></i><i></i></span>';busy=true;setBusyUI();
+ const qi=instant(t,bot);if(qi){setTimeout(()=>{setBot(d,qi,true);h.push({r:'b',t:qi});saveH();busy=false;setBusyUI()},500);return}
+ ctl=new AbortController();let ans='',raf=0,err=0;const t0=Date.now(),tm=setInterval(()=>{if(!ans&&Date.now()-t0>4000)d.textContent='🧠 Thinking… '+Math.round((Date.now()-t0)/1000)+'s'},500);
+ try{const r=await fetch(BASE+'/api/chat',{method:'POST',signal:ctl.signal,headers:{'content-type':'application/json',authorization:'Bearer '+TOK},body:JSON.stringify({bot,stream:1,mode:spd,persona,history:h.filter(x=>!x.e&&!x.w).slice(-4)})});if(!r.ok||!r.body)throw new Error((await r.json().catch(()=>({}))).error||'Server error');
+  const rd=r.body.getReader(),dc=new TextDecoder();for(;;){const{done,value}=await rd.read();if(done)break;ans+=dc.decode(value,{stream:true});if(!raf)raf=requestAnimationFrame(()=>{raf=0;d.innerHTML=fmt(ans.trimStart())||'…';const c=$('ch');if(c)c.scrollTop=1e9})}
+  ans=ans.trim()||'(empty reply)'}
+ catch(e){if(e.name==='AbortError')ans=(ans.trim()?ans.trim()+'\n\n':'')+'⏹ Stopped.';else{err=1;ans=(ans?ans.trim()+'\n\n':'')+'⚠️ '+e.message}}
+ clearInterval(tm);cancelAnimationFrame(raf);if(/AI engine offline/.test(ans))err=1;setBot(d,ans,!err);h.push({r:'b',t:ans,e:err});saveH();busy=false;setBusyUI();const c=$('ch');if(c)c.scrollTop=1e9}
+/* RADAR */
+let raf=0,rid=0,SRV=null;function stopRadar(){cancelAnimationFrame(raf);rid++}
+async function srv(){if(SRV)return SRV;const t=performance.now(),r=await fetch(BASE+'/api/health',{cache:'no-store'}),j=await r.json();return SRV={ms:Math.round(performance.now()-t),j,h:r.headers}}
+const RCH=[
+['HTTPS / encrypted connection',async()=>{const ok=location.protocol==='https:',lh=/^(localhost|127\.)/.test(location.hostname);return[ok||lh,ok?'TLS active':lh?'localhost (fine for testing)':'plain HTTP: traffic can be read on the network']}],
+['Secure browser context',async()=>[isSecureContext,isSecureContext?'Secure APIs available':'Some security APIs are disabled']],
+['Crypto engine',async()=>[!!(crypto&&crypto.subtle),crypto&&crypto.subtle?'WebCrypto ready':'Using built-in fallback hashing']],
+['Cookies',async()=>[navigator.cookieEnabled,navigator.cookieEnabled?'Enabled':'Disabled']],
+['Anti-clickjacking (not framed)',async()=>[window.top===window,window.top===window?'Page not embedded':'Embedded in another site!']],
+['Local storage',async()=>{try{localStorage.setItem('_t',1);localStorage.removeItem('_t');return[true,'Working']}catch(e){return[false,'Blocked']}}],
+['Network link',async()=>{const c=navigator.connection;return[navigator.onLine&&(!c||c.effectiveType!=='slow-2g'),(navigator.onLine?'Online':'Offline')+(c?' · '+c.effectiveType+(c.downlink?' · '+c.downlink+' Mbps':''):'')]}],
+['Privacy signal (DNT / GPC)',async()=>{const ok=navigator.doNotTrack==='1'||navigator.globalPrivacyControl===true;return[ok,ok?'Tracking opt-out sent':'Not enabled in browser']}],
+['Server reachability',async()=>{const x=await srv();return[x.ms<1500,x.ms+' ms round-trip']}],
+['Server security headers',async()=>{const x=await srv(),n=['x-content-type-options','x-frame-options','referrer-policy'].filter(k=>x.h.get(k));return[n.length===3,n.length+'/3 protective headers']}],
+['Database',async()=>{const x=await srv();return[true,x.j.db]}],
+['AI engine (Ollama)',async()=>{const a=(await srv()).j.ai;return[a.up,a.up?a.model+' online':(a.error||'offline')]}],
+['App install (PWA)',async()=>{const i=matchMedia('(display-mode: standalone)').matches;return[true,i?'Running as installed app':'Browser tab (can be installed)']}]];
+function vRadar(){M(`<div class="g card"><h2>📡 Security Radar</h2><p class="mu">Live sweep of your device, browser and this server. Every ping on the radar is a real check, listed on the right as it is scanned.</p><div class="row" style="align-items:flex-start;justify-content:center;gap:18px"><canvas id="cv" width="340" height="340"></canvas><div class="feed" style="flex:1;min-width:250px"><div id="now" style="font-weight:700;margin-bottom:6px">Radar OFF — press Power ON</div><div id="feed"></div></div></div><div class="row" style="justify-content:center;margin-top:10px"><button class="btn" onclick="sweep()">⏻ Power ON</button><button class="btn s" onclick="radarOff()">Power OFF</button></div></div><div id="rr"></div>`);radarIdle()}
+function radarIdle(){const cv=$('cv');if(!cv)return;const x=cv.getContext('2d'),R=170;x.clearRect(0,0,340,340);x.fillStyle='rgba(2,14,6,.88)';x.beginPath();x.arc(R,R,R-2,0,7);x.fill();x.strokeStyle='rgba(74,222,128,.25)';for(let i=1;i<=4;i++){x.beginPath();x.arc(R,R,(R-2)*i/4,0,7);x.stroke()}x.beginPath();x.moveTo(R,0);x.lineTo(R,340);x.moveTo(0,R);x.lineTo(340,R);x.stroke();x.fillStyle='rgba(74,222,128,.6)';x.font='700 13px monospace';x.textAlign='center';x.fillText('STANDBY · POWER OFF',R,R+4);x.textAlign='left'}
+function radarOff(){stopRadar();radarIdle();if($('now'))$('now').textContent='Radar OFF';if($('rr'))$('rr').innerHTML=''}
+async function sweep(){stopRadar();const my=rid,n=RCH.length;SRV=null;$('rr').innerHTML='';$('now').textContent='Preparing checks…';
+ $('feed').innerHTML=RCH.map((c,i)=>`<div class="it" id="f${i}">⏳ ${esc(c[0])}</div>`).join('');
+ const res=await Promise.all(RCH.map(c=>c[1]().catch(e=>[false,String(e.message||e)])));if(my!==rid||!$('cv'))return;
+ const cv=$('cv'),x=cv.getContext('2d'),R=170,bl=res.map((r,i)=>{const t=(i+1)/(n+1);return{t,a:(t*4*Math.PI)%(2*Math.PI),r:.3+.6*((i*37%10)/10),ok:r[0],at:0}}),t0=performance.now(),D=6500;
+ (function f(now){if(my!==rid||!$('cv'))return;const p=Math.min(1,(now-t0)/D),ang=p*4*Math.PI;x.clearRect(0,0,340,340);
+  x.fillStyle='rgba(2,14,6,.88)';x.beginPath();x.arc(R,R,R-2,0,7);x.fill();x.strokeStyle='rgba(74,222,128,.5)';x.lineWidth=1;
+  for(let i=1;i<=4;i++){x.beginPath();x.arc(R,R,(R-2)*i/4,0,7);x.stroke()}x.beginPath();x.moveTo(R,0);x.lineTo(R,340);x.moveTo(0,R);x.lineTo(340,R);x.stroke();
+  if(x.createConicGradient){const g=x.createConicGradient(ang-1.2,R,R);g.addColorStop(0,'rgba(74,222,128,0)');g.addColorStop(.19,'rgba(74,222,128,.65)');g.addColorStop(.2,'rgba(74,222,128,0)');x.fillStyle=g;x.beginPath();x.arc(R,R,R-2,0,7);x.fill()}
+  x.strokeStyle='rgba(74,222,128,.9)';x.lineWidth=2;x.beginPath();x.moveTo(R,R);x.lineTo(R+Math.cos(ang)*(R-2),R+Math.sin(ang)*(R-2));x.stroke();
+  bl.forEach((b,i)=>{if(p>=b.t){if(!b.at){b.at=now;$('f'+i).innerHTML=(res[i][0]?'✅ ':'⚠️ ')+esc(RCH[i][0])+' <span class="mu">— '+esc(res[i][1])+'</span>'}
+   const bx=R+Math.cos(b.a)*b.r*R,by=R+Math.sin(b.a)*b.r*R,k=((now-b.at)%1400)/1400;x.fillStyle=b.ok?'#22c55e':'#fb923c';x.beginPath();x.arc(bx,by,b.ok?5:8,0,7);x.fill();
+   x.strokeStyle=(b.ok?'rgba(34,197,94,':'rgba(74,222,128,')+(1-k)*.7+')';x.beginPath();x.arc(bx,by,6+k*16,0,7);x.stroke();x.fillStyle='#b6f5d0';x.font='10px system-ui';x.fillText(i+1,bx+9,by-7)}});
+  const nx=bl.findIndex(b=>!b.at);$('now').textContent=nx>=0?'🔎 Scanning: '+RCH[nx][0]+'…':'✔ Sweep complete';
+  if(p<1)raf=requestAnimationFrame(f);else{const bad=res.filter(r=>!r[0]).length;$('rr').innerHTML=verdict(bad*20,res.map((r,i)=>(r[0]?'✅ ':'⚠️ ')+esc(RCH[i][0])+' — '+esc(r[1])),'Sweep result')}})(t0)}
+/* VIRUS SCANNER */
+function vScan(){M(`<div class="g card"><h2>🦠 Virus Scanner</h2><p class="mu">Select a file. It is analysed <b>on your device only</b> (never uploaded): SHA-256 fingerprint, dangerous type, disguised extension, hidden executables and malicious script patterns. Note: a browser app cannot scan your whole drive; this is heuristic, not a full antivirus.</p><input type="file" id="fl" multiple><div class="row" style="margin-top:10px"><button class="btn" onclick="runScan()">Scan Files</button></div></div><div id="sr"></div>`)}
+const BAD_EXT=/\.(exe|scr|bat|cmd|com|pif|vbs|vbe|js|jse|wsf|ps1|lnk|msi|jar|hta|apk|dll)$/i;
+const SIGS=[[/X5O!P%@AP\[4\\PZX54\(P\^\)7CC\)7\}\$EICAR/,'EICAR antivirus test signature',100],[/powershell[^\n]{0,80}-e(nc|ncodedcommand)/i,'Encoded PowerShell command',40],[/WScript\.Shell|CreateObject\s*\(/i,'Windows script shell object',30],[/cmd(\.exe)?\s*\/c/i,'Command-line execution',25],[/certutil[^\n]{0,40}-urlcache|bitsadmin[^\n]{0,30}\/transfer/i,'Downloader via system tool',45],[/Invoke-Expression|\bIEX\s*\(|FromBase64String/i,'Obfuscated PowerShell',35],[/eval\s*\(\s*(unescape|atob)|String\.fromCharCode\([\d, ]{40,}/i,'Obfuscated JavaScript',35],[/your files (have been|are) encrypted|decrypt[^\n]{0,40}bitcoin/i,'Ransomware note wording',60],[/HKEY_[A-Z_]+\\[^\n]{0,60}\\Run/i,'Startup persistence registry key',30]];
+function sha256js(d){const P=[];for(let n=2;P.length<64;n++)if(P.every(p=>n%p))P.push(n);const fr=v=>((v-Math.floor(v))*4294967296)>>>0,K=P.map(p=>fr(Math.cbrt(p))),H=P.slice(0,8).map(p=>fr(Math.sqrt(p))),l=d.length,n=((l+9+63)>>6)<<6,b=new Uint8Array(n);b.set(d);b[l]=128;const v=new DataView(b.buffer);v.setUint32(n-4,(l*8)>>>0);v.setUint32(n-8,Math.floor(l/536870912));
+ const w=new Uint32Array(64),r=(x,c)=>(x>>>c)|(x<<(32-c));for(let o=0;o<n;o+=64){for(let i=0;i<16;i++)w[i]=v.getUint32(o+i*4);for(let i=16;i<64;i++){const a=w[i-15],c=w[i-2];w[i]=(w[i-16]+(r(a,7)^r(a,18)^(a>>>3))+w[i-7]+(r(c,17)^r(c,19)^(c>>>10)))>>>0}
+ let[a,c,e,g,h,i,j,k]=H;for(let t=0;t<64;t++){const t1=(k+(r(h,6)^r(h,11)^r(h,25))+((h&i)^(~h&j))+K[t]+w[t])>>>0,t2=((r(a,2)^r(a,13)^r(a,22))+((a&c)^(a&e)^(c&e)))>>>0;k=j;j=i;i=h;h=(g+t1)>>>0;g=e;e=c;c=a;a=(t1+t2)>>>0}
+ [a,c,e,g,h,i,j,k].forEach((x,q)=>H[q]=(H[q]+x)>>>0)}return H.map(x=>x.toString(16).padStart(8,'0')).join('')}
+async function fhash(buf){return crypto&&crypto.subtle?[...new Uint8Array(await crypto.subtle.digest('SHA-256',buf))].map(x=>x.toString(16).padStart(2,'0')).join(''):sha256js(new Uint8Array(buf))}
+async function vtq(type,value){return{line:'',add:0}}async function _vt(type,value){try{const r=await api('/api/vt','POST',{type,value});if(!r.available)return{line:'ℹ️ VirusTotal: not enabled (add VIRUSTOTAL_API_KEY in .env for real multi-engine scan)',add:0};if(r.error)return{line:'ℹ️ VirusTotal: '+esc(r.error),add:0};if(!r.found)return{line:'ℹ️ VirusTotal: never seen before (unknown, not proven safe)',add:0};
+ const bad=r.malicious+r.suspicious;return{line:(bad?'🚩 ':'✅ ')+'VirusTotal: '+r.malicious+' malicious, '+r.suspicious+' suspicious out of '+r.total+' engines',add:r.malicious>=3?70:bad?35:0}}catch(e){return{line:'ℹ️ VirusTotal lookup failed',add:0}}}
+async function runScan(){const fs=[...$('fl').files];if(!fs.length)return $('sr').innerHTML='<div class="g card">Choose a file first.</div>';
+ $('sr').innerHTML='<div class="g card"><h3 style="margin:0 0 6px" id="st">Starting…</h3><div class="bar"><i id="sb" style="width:0"></i></div><div id="sl" class="mu"></div></div>';
+ const step=async(t,p)=>{$('st').textContent=t;$('sb').style.width=p+'%';$('sl').innerHTML+='<div>✔ '+esc(t)+'</div>';await new Promise(r=>setTimeout(r,220))},V=[];
+ try{for(let k=0;k<fs.length;k++){const f=fs[k],tag=fs.length>1?`[${k+1}/${fs.length}] `:'';
+  await step(tag+'Reading '+f.name+' ('+(f.size/1024).toFixed(1)+' KB)',10);const buf=await f.arrayBuffer(),b=new Uint8Array(buf);
+  await step(tag+'Computing SHA-256 fingerprint',30);const h=await fhash(buf);let s=0;const it=[`📄 ${esc(f.name)} · ${(f.size/1024).toFixed(1)} KB`,`🔑 SHA-256: <code style="word-break:break-all">${h}</code>`];
+  await step(tag+'Checking file type & disguised extension',50);
+  if(/\.(pdf|docx?|xlsx?|jpe?g|png|gif|txt|mp3|mp4)\.(exe|scr|bat|cmd|com|js|vbs|lnk|ps1)$/i.test(f.name)){s+=60;it.push('🚩 Disguised double extension')}else if(BAD_EXT.test(f.name)){s+=20;it.push('⚠️ Executable/script file type: run only if you trust the source')}
+  await step(tag+'Reading file header (hidden executables)',65);
+  if(b[0]===77&&b[1]===90&&!/\.(exe|dll|scr|sys|com)$/i.test(f.name)){s+=50;it.push('🚩 Windows executable hidden inside a non-executable file')}
+  if(b[0]===0x7f&&b[1]===69&&b[2]===76&&b[3]===70&&!/\.(so|elf|bin|out)$/i.test(f.name)){s+=25;it.push('⚠️ Linux executable header')}
+  if(/\.(docm|xlsm|pptm)$/i.test(f.name)){s+=25;it.push('⚠️ Macro-enabled Office file')}
+  await step(tag+'Matching '+SIGS.length+' malware signatures in file content',85);
+  const txt=new TextDecoder('latin1').decode(b.slice(0,3e6));SIGS.forEach(g=>{if(g[0].test(txt)){s+=g[2];it.push('🚩 '+g[1])}});if(!f.size)it.push('ℹ️ Empty file');
+  const vt=await vtq('file',h);if(vt.line){it.push(vt.line);s+=vt.add}
+  me.scans++;saveMe();V.push(verdict(s,it,'Scan result'))}
+  await step('Scan complete',100);$('sr').innerHTML=V.join('')}catch(e){$('sr').innerHTML='<div class="g card">❌ Scan failed: '+esc(e.message)+'</div>'}}
+/* LINK ANALYSIS */
+function vLink(){M(`<div class="g card"><h2>🔗 Link Analysis</h2><p class="mu">Paste a link to check for phishing and scam indicators before you click. Analysis is offline; the link is never opened.</p><input id="lk" placeholder="https://example.com/…" onkeydown="if(event.key==='Enter')runLink()"><div class="row" style="margin-top:10px"><button class="btn" onclick="runLink()">Analyse</button></div></div><div id="lr"></div>`)}
+async function runLink(){let raw=$('lk').value.trim();if(!raw)return;let u;try{u=new URL(/^[a-z]+:\/\//i.test(raw)?raw:'http://'+raw)}catch(e){return $('lr').innerHTML=verdict(70,['Not a valid URL'],'Link result')}
+ const it=[];let s=0;const add=(n,t)=>{s+=n;it.push(t)},h=u.hostname.toLowerCase(),parts=h.split('.');
+ it.push('🌐 Domain: <b>'+esc(h)+'</b>');
+ if(u.protocol==='http:')add(20,'⚠️ Not encrypted (HTTP)');else if(u.protocol!=='https:')add(40,'🚩 Unusual protocol '+esc(u.protocol));
+ if(/^\d{1,3}(\.\d{1,3}){3}$/.test(h))add(40,'🚩 Uses an IP address instead of a domain');
+ if(h.includes('xn--'))add(35,'🚩 Punycode (look-alike characters) domain');
+ if(/@/.test(raw.split('?')[0].replace(/^[a-z]+:\/\//i,'').split('/')[0]))add(40,'🚩 Contains "@" to hide the real destination');
+ if(parts.length>4)add(20,'⚠️ Many subdomains');
+ if(/\.(tk|ml|ga|cf|gq|xyz|top|click|zip|mov|work|country|support|loan|rest|icu)$/.test(h))add(25,'⚠️ Free/high-abuse TLD');
+ if(/^(bit\.ly|tinyurl\.com|t\.co|goo\.gl|is\.gd|cutt\.ly|rb\.gy|ow\.ly|shorturl\.at)$/.test(h))add(25,'⚠️ URL shortener hides the destination');
+ if(/(login|verify|secure|update|account|banking|wallet|kyc|confirm|suspend|password|otp|refund|prize|free)/.test(h+u.pathname))add(20,'⚠️ Sensitive/urgent keywords in the link');
+ const br=['paypal','amazon','google','microsoft','apple','netflix','facebook','instagram','whatsapp','sbi','hdfc','icici','paytm','phonepe','gpay','flipkart'];br.forEach(b=>{const root=parts.slice(-2).join('.');if(h.includes(b)&&!root.startsWith(b+'.'))add(40,'🚩 Imitates brand "'+b+'" but the real domain is '+esc(root))});
+ if(h.split('-').length>3)add(15,'⚠️ Many hyphens in domain');if(raw.length>120)add(10,'⚠️ Very long URL');if(u.port&&!['80','443'].includes(u.port))add(15,'⚠️ Unusual port '+u.port);
+ if(/\.(exe|apk|scr|zip|msi|bat)$/i.test(u.pathname))add(35,'🚩 Link downloads an executable/archive');
+ if(!it.some(x=>x.startsWith('🚩')||x.startsWith('⚠️')))it.push('✅ No common phishing patterns found. Still verify the sender.');
+ const vt=await vtq('url',u.href);if(vt.line){it.push(vt.line);s+=vt.add}me.scans++;saveMe();$('lr').innerHTML=verdict(s,it,'Link result')}
+/* FRAUD */
+const FR=[[/otp|one.?time|cvv|pin\b|card number/i,'Asks for OTP/PIN/card details. Legit companies never do this',45],[/urgent|immediately|within \d+ ?(hours|hrs|minutes)|last chance|act now|expires? (today|soon)/i,'Creates false urgency',20],[/(account|card|sim|number|upi|wallet)[^.]{0,30}(blocked|suspended|deactivated|frozen|closed)/i,'Threatens account blocking',30],[/kyc|pan (card )?(update|verify)|aadhaar|verify your (identity|account)/i,'KYC/identity update bait',30],[/lottery|you (have )?won|prize|winner|jackpot|reward points|cashback claim/i,'Prize/lottery bait',35],[/gift ?card|itunes|bitcoin|crypto|wire transfer|western union/i,'Untraceable payment request',30],[/work from home|earn \₹?\$?\d+|per (day|hour)|part.?time job|like (and )?subscribe.*earn/i,'Fake job / easy money offer',30],[/refund|tax (return|refund)|electricity (bill|will be)|disconnect/i,'Refund / utility disconnection scam',25],[/(https?:\/\/|www\.|bit\.ly|t\.co)\S+/i,'Contains a link. Verify it in Link Analysis',15],[/(police|cbi|customs|narcotics|court|arrest|parcel)/i,'Authority / "digital arrest" intimidation',35],[/(send|pay|transfer)[^.]{0,20}(₹|rs\.?|inr|\$|usd)\s?\d+/i,'Requests money transfer',25],[/dear (customer|user|sir|madam|winner)/i,'Generic greeting',10],[/anydesk|teamviewer|quicksupport|remote (access|support)/i,'Requests remote-access app',45]];
+function vFraud(){M(`<div class="g card"><h2>🚨 Fraud Message Detector</h2><p class="mu">Paste an SMS, WhatsApp, email or call script.</p><textarea id="fm" rows="6" placeholder="Paste the suspicious message here…"></textarea><div class="row" style="margin-top:10px"><button class="btn" onclick="runFraud()">Detect Fraud</button></div></div><div id="fr"></div>`)}
+function runFraud(){const t=$('fm').value;if(!t.trim())return;let s=0;const it=[];FR.forEach(r=>{if(r[0].test(t)){s+=r[2];it.push('🚩 '+r[1])}});
+ if(s>=25)it.push('👉 Do not reply, click or pay. Block the sender. Report at cybercrime.gov.in or call 1930 (India).');me.scans++;saveMe();$('fr').innerHTML=verdict(s,it,'Message result')}
+/* LESSONS */
+const LS=[['Phishing 101','Phishing tricks you into giving secrets via fake emails, SMS or sites. Check the sender address, never trust urgency, hover over links, and open official apps or sites yourself.',['Best response to an "account blocked, click now" SMS?',['Click quickly','Open the official app/site yourself','Reply with OTP'],1]],
+['Strong Passwords & 2FA','Use long unique passphrases (14+ characters), a password manager, and 2-factor authentication with an authenticator app. Never reuse passwords.',['Which is strongest?',['Name@123','A random 4-word passphrase with numbers','Your birthday'],1]],
+['Spotting Malware','Malware arrives through cracked software, unknown attachments and fake updates. Keep your OS updated, avoid pirated apps, and scan files before opening.',['Safest source for apps?',['Random Telegram link','Official app store / vendor site','Cracked forum'],1]],
+['UPI & Banking Fraud','Never share OTP/PIN. Entering your UPI PIN is only for SENDING money, never receiving. Banks never call for OTPs.',['A buyer asks you to enter your UPI PIN to receive money. It is…',['Normal','A scam','Required by the bank'],1]],
+['Safe Wi-Fi & Privacy','Avoid sensitive logins on public Wi-Fi, use a VPN, turn off auto-connect, and review app permissions regularly.',['On public Wi-Fi you should…',['Do banking freely','Avoid banking or use a VPN','Share your hotspot password'],1]],
+['Social Engineering','Attackers exploit trust, fear and greed. Verify identity through a second channel, and remember police/courts never demand money by video call.',['A "CBI officer" video-calls demanding payment. You…',['Pay to avoid arrest','Hang up and report to 1930','Share Aadhaar'],1]]];
+function vLessons(){const d=me.done||[];M(`<div class="g card"><h2>🎓 Cyber Lessons</h2><div class="mu">${d.length}/${LS.length} completed</div><div class="bar"><i style="width:${d.length/LS.length*100}%"></i></div></div>`+LS.map((l,i)=>`<div class="g card"><h3 style="margin:0 0 6px">${d.includes(i)?'✅':'📘'} ${i+1}. ${l[0]}</h3><p>${l[1]}</p><b>${l[2][0]}</b><div class="row" style="margin-top:8px">${l[2][1].map((o,j)=>`<button class="btn s" onclick="ans(${i},${j},this)">${o}</button>`).join('')}</div></div>`).join(''))}
+function ans(i,j,b){if(j===LS[i][2][2]){me.done=[...new Set([...(me.done||[]),i])];saveMe();vLessons()}else{b.textContent+=' ❌';b.disabled=true}}
+/* PROFILE */
+function vProfile(){M(`<div class="g card"><h2>👤 Profile</h2><div class="row"><img class="lg big" src="logo-v2.png" alt="" style="margin:0"><div><b style="font-size:18px">${esc(me.name)}</b><div class="mu">${esc(me.email)}</div><div class="mu">Member since ${new Date(me.joined).toLocaleDateString()}</div></div></div>
+<div class="row" style="margin:14px 0"><span class="pill safe">${me.scans} scans</span><span class="pill warn">${(me.done||[]).length}/${LS.length} lessons</span></div>
+<input id="pn" value="${esc(me.name)}" style="margin-bottom:8px"><div class="row"><button class="btn" onclick="me.name=$('pn').value.trim()||me.name;saveMe();vProfile()">Save name</button><button class="btn s" onclick="toggleTheme()">${isDark()?'☀️ Day mode':'🌙 Night mode'}</button><button class="btn s" onclick="logout()">Sign out</button></div></div>
+<div class="g card"><h3 style="margin-top:0">Legal</h3><div class="row"><button class="btn s" onclick="legal('l')">📜 License</button><button class="btn s" onclick="legal('t')">📋 Terms &amp; Conditions</button><button class="btn s" onclick="if(confirm('Delete your account and all data?')){api('/api/me','DELETE').then(logout)}">🗑 Delete account</button></div></div>`)}
+function legal(k){const T={l:['License','CyberShield AI is licensed to you under a personal, non-exclusive, non-transferable, revocable licence for lawful, non-commercial use. You may not copy, resell, reverse engineer or redistribute the app, nor use it to attack, spy on or defraud others. All rights not expressly granted are reserved by the app owner. The software is provided “as is” without warranty of any kind.'],t:['Terms & Conditions','1. Accounts: keep your credentials safe; you are responsible for activity on your account.\n2. Data: your account (with a hashed password), progress and scan-activity metadata are stored on the server this app runs on; chat history stays on your device. Files you scan are analysed on-device and are not uploaded. Chat messages are sent to the configured AI service to generate replies; do not enter passwords or sensitive personal data.\n3. Security tools are heuristic and advisory. They may miss threats or flag safe items; they do not replace a full antivirus, and no result is a guarantee of safety.\n4. AI answers may be inaccurate; verify important information.\n5. Prohibited: illegal use, creating or spreading malware, harassment, or abusing the service.\n6. Liability: to the maximum extent permitted by law, the owner is not liable for loss or damage arising from use of the app.\n7. We may update these terms; continued use means acceptance.']}[k];
+ $('modal').innerHTML=`<div class="mod" onclick="if(event.target===this)this.remove()"><div class="g"><h2>${T[0]}</h2><p style="white-space:pre-wrap">${T[1]}</p><button class="btn" onclick="this.closest('.mod').remove()">Close</button></div></div>`}
+/* IOC EXTRACTOR */
+function vIoc(){M(`<div class="g card"><h2>🧪 IOC Extractor</h2><p class="mu">Paste logs, email headers or a threat report. IPs, domains, URLs, hashes, emails and CVEs are pulled out <b>on your device only</b>, and shown defanged so nobody clicks them by mistake.</p><textarea id="ii" rows="8" placeholder="Paste text here…"></textarea><div class="row" style="margin-top:10px"><button class="btn" onclick="runIoc()">Extract</button><button class="btn s" onclick="$('ii').value='';$('ir').innerHTML=''">Clear</button></div></div><div id="ir"></div>`)}
+const defang=v=>v.replace(/^http/i,'hxxp').replace(/\./g,'[.]').replace(/@/g,'[@]'),privIP=v=>/^(10\.|127\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.|0\.)/.test(v);
+let IOCS=null;
+function runIoc(){const t=$('ii').value;if(!t.trim())return;const u=a=>[...new Set(a||[])];
+ const urls=u(t.match(/\bh(?:tt|xx)ps?:\/\/[^\s"'<>)\]]+/gi)).map(x=>x.replace(/[.,;]+$/,'')),
+  ips=u(t.match(/\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b/g)),
+  hashes=u(t.match(/\b(?:[a-f0-9]{64}|[a-f0-9]{40}|[a-f0-9]{32})\b/gi)).map(x=>x.toLowerCase()),
+  mails=u(t.match(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g)),cves=u((t.match(/\bCVE-\d{4}-\d{4,7}\b/gi)||[]).map(x=>x.toUpperCase()));
+ const skip=/\.(exe|dll|txt|log|js|css|png|jpe?g|gif|pdf|docx?|xlsx?|zip|bat|ps1|sh|py|json|xml|html?|php|asp|tmp|dat|sys|ini|cfg|md)$/i,ipRe=/^\d{1,3}(\.\d{1,3}){3}$/;
+ const hostOf=x=>{try{return new URL(x.replace(/^hxxp/i,'http')).hostname}catch{return''}};
+ const doms=u([...(t.match(/\b(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,24}\b/gi)||[]).map(x=>x.toLowerCase()),...urls.map(hostOf)]).filter(x=>x&&!ipRe.test(x)&&!skip.test(x));
+ const G=[['🌐 URLs',urls.map(defang)],['📍 IP addresses',ips.map(x=>defang(x)+(privIP(x)?'  (private)':''))],['🔗 Domains',doms.map(defang)],['🔑 Hashes',hashes],['✉️ Emails',mails.map(defang)],['🐞 CVEs',cves]].filter(g=>g[1].length);
+ IOCS=G;const n=G.reduce((a,g)=>a+g[1].length,0);
+ $('ir').innerHTML=n?`<div class="g card"><div class="row"><h2>${n} indicators found</h2><span style="flex:1"></span><button class="btn s" onclick="cpIoc(this)">📋 Copy all</button><button class="btn" onclick="askIoc()">🤖 Analyse with AI</button></div>`+G.map(g=>`<h3 style="margin:14px 0 6px">${g[0]} <span class="tag">${g[1].length}</span></h3>`+g[1].map(x=>`<div class="it"><code style="word-break:break-all">${esc(x)}</code></div>`).join('')).join('')+'</div>':'<div class="g card">No indicators found in this text.</div>'}
+const iocText=()=>(IOCS||[]).map(g=>g[0]+'\n'+g[1].join('\n')).join('\n\n');
+function cpIoc(b){clip(iocText(),b)}
+function askIoc(){askAI(('I extracted these indicators of compromise. Tell me which look most suspicious, what each type could mean, and how to investigate and block them safely (they are defanged).\n'+(IOCS||[]).map(g=>g[0]+': '+g[1].slice(0,6).join(', ')).join('\n')).slice(0,1700))}
+/* EXTRA TOOLS */
+function vPw(){M(`<div class="g card"><h2>🔑 Password Checker</h2><input id="pi" placeholder="Type a password to test (never sent anywhere)" oninput="chkPw()"><div class="bar"><i id="pb" style="width:0"></i></div><div id="pr" class="mu"></div></div><div class="g card"><h2>🎲 Password Generator</h2><div class="row"><label>Length <input id="pl" type="range" min="8" max="64" value="18" oninput="$('plv').textContent=this.value" style="width:150px"> <b id="plv">18</b></label><label><input type="checkbox" id="ps" checked style="width:auto"> Symbols</label><label><input type="checkbox" id="pp" style="width:auto"> Passphrase</label></div><div class="row" style="margin:10px 0"><button class="btn" onclick="genPw()">Generate</button><button class="btn s" onclick="navigator.clipboard&&navigator.clipboard.writeText($('po').value)">Copy</button></div><input id="po" readonly style="font-family:monospace"></div>`);genPw()}
+function chkPw(){const p=$('pi').value;let pool=0;if(/[a-z]/.test(p))pool+=26;if(/[A-Z]/.test(p))pool+=26;if(/\d/.test(p))pool+=10;if(/[^\w]/.test(p))pool+=32;let bits=p.length*Math.log2(pool||1);const it=[];
+ if(/^(password|123456|qwerty|admin|letmein|welcome|iloveyou|abc123|111111)/i.test(p)){bits=Math.min(bits,15);it.push('🚩 Very common password')}
+ if(/(.)\1{2,}/.test(p)){bits-=8;it.push('⚠️ Repeated characters')}if(/(0123|1234|2345|abcd|qwer)/i.test(p)){bits-=10;it.push('⚠️ Predictable sequence')}
+ if(p&&p.length<12)it.push('⚠️ Use 12+ characters');bits=Math.max(0,bits);$('pb').style.width=Math.min(100,bits/80*100)+'%';
+ const g=Math.pow(2,bits)/1e10,t=g<1?'instantly':g<60?Math.round(g)+' seconds':g<3600?Math.round(g/60)+' minutes':g<86400?Math.round(g/3600)+' hours':g<3.15e7?Math.round(g/86400)+' days':g<3.15e9?Math.round(g/3.15e7)+' years':'centuries+';
+ $('pr').innerHTML=p?`Entropy ≈ ${Math.round(bits)} bits · offline crack time ≈ <b>${t}</b>`+it.map(x=>'<div class="it">'+x+'</div>').join(''):''}
+function genPw(){const n=+$('pl').value,r=x=>{const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%x};let o='';
+ if($('pp').checked){const W='amber,anchor,badger,breeze,cactus,canyon,comet,dragon,ember,falcon,forest,glacier,harbor,island,jungle,kernel,lantern,meadow,nebula,orchid,pebble,quartz,raven,saffron,thunder,velvet,willow,zephyr,cobalt,crimson,marble,tundra'.split(',');o=[0,1,2,3].map(()=>W[r(W.length)]).join('-')+'-'+(10+r(90))}
+ else{const c='abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'+($('ps').checked?'!@#$%^&*-_+=?':'');for(let i=0;i<n;i++)o+=c[r(c.length)]}$('po').value=o}
+function vTools(){M(`<div class="g card"><h2>🧰 Hash &amp; Encode Tools</h2><textarea id="ti" rows="4" placeholder="Enter text…"></textarea><div class="row" style="margin:10px 0"><button class="btn s" onclick="hs('SHA-1')">SHA-1</button><button class="btn s" onclick="hs('SHA-256')">SHA-256</button><button class="btn s" onclick="hs('SHA-512')">SHA-512</button><button class="btn s" onclick="out(btoa(unescape(encodeURIComponent($('ti').value))))">Base64 ⬆</button><button class="btn s" onclick="try{out(decodeURIComponent(escape(atob($('ti').value.trim()))))}catch(e){out('Invalid Base64')}">Base64 ⬇</button><button class="btn s" onclick="out(encodeURIComponent($('ti').value))">URL encode</button></div><textarea id="to" rows="4" readonly placeholder="Result"></textarea></div>`)}
+const out=v=>$('to').value=v;async function hs(a){out([...new Uint8Array(await crypto.subtle.digest(a,new TextEncoder().encode($('ti').value)))].map(b=>b.toString(16).padStart(2,'0')).join(''))}
+async function vHist(){M('<div class="g card"><h2>🕘 Activity</h2><div id="hl" class="mu">Loading…</div></div>');try{const r=await api('/api/history');$('hl').innerHTML=r.items.length?r.items.map(i=>`<div class="it"><span class="pill ${i.score>=60?'bad':i.score>=25?'warn':'safe'}">${i.score}</span> ${esc(i.type)} · ${new Date(i.at).toLocaleString()}</div>`).join(''):'No activity yet. Run a scan!'}catch(e){$('hl').textContent=e.message}}
+document.addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.tilt');if(!c||e.pointerType==='touch')return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.setProperty('--rx',((.5-y)*9)+'deg');c.style.setProperty('--ry',((x-.5)*11)+'deg');c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%')});
+document.addEventListener('pointerout',e=>{const c=e.target.closest&&e.target.closest('.tilt');if(c&&!c.contains(e.relatedTarget)){c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')}});
+window.IP=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.IP=e});
+function doInstall(){if(window.IP){IP.prompt();IP.userChoice.finally(()=>window.IP=null)}else alert('Android Chrome: ⋮ menu → Install app\niPhone Safari: Share → Add to Home Screen\nPC Chrome/Edge: address bar-la ⊕ Install icon')}
+/* BOOT */
+function drops(){}
+api('/api/health').catch(e=>{$('er').textContent='⚠️ '+e.message});drops();if(TOK)api('/api/me').then(r=>start(r.user)).catch(()=>{});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js?v=2').catch(()=>{});
+</script></body></html>

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: cybershield-ai
+    runtime: node
+    plan: free
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /api/ping
+    envVars:
+      - {key: NODE_ENV, value: production}
+      - {key: JWT_SECRET, generateValue: true}
+      - {key: DATABASE_URL, sync: false}
+      - {key: OLLAMA_URL, value: "https://ollama.com"}
+      - {key: OLLAMA_MODEL, value: "gpt-oss:20b"}
+      - {key: OLLAMA_API_KEY, sync: false}

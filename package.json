@@ -1,0 +1,15 @@
+{
+ "name": "cybershield-ai",
+ "version": "6.4.0",
+ "description": "CyberShield AI Pro",
+ "main": "server.js",
+ "scripts": {
+  "start": "node server.js"
+ },
+ "engines": {
+  "node": ">=18"
+ },
+ "dependencies": {
+  "pg": "^8.11.3"
+ }
+}
